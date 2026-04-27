@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>BHK STORE — جهاز IPL</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f0f2f5;
+      padding: 10px;
+      direction: rtl;
+    }
+
+    #form {
+      background: #fff;
+      padding: 22px;
+      border-radius: 16px;
+      width: 95%;
+      max-width: 500px;
+      margin: 20px auto;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    }
+
+    /* ── Header ── */
+    .header { text-align: center; margin-bottom: 20px; }
+    .header img { width: 110px; height: auto; margin-bottom: 8px; }
+    .header h2 { color: #dc6e14; margin: 5px 0; font-size: 22px; }
+    .header p  { margin: 4px 0; font-size: 13px; color: #666; }
+
+    /* ── Inputs ── */
+    input, select {
+      width: 100%;
+      padding: 13px 14px;
+      margin-top: 12px;
+      border-radius: 10px;
+      border: 2px solid #eee;
+      font-size: 15px;
+      font-family: inherit;
+      box-sizing: border-box;
+      background: #f9f9f9;
+      transition: border-color .2s;
+    }
+    input:focus, select:focus {
+      border-color: #dc6e14;
+      outline: none;
+      background: #fff;
+    }
+
+    /* ── Phone box ── */
+    .phone-box {
+      display: flex;
+      direction: ltr;
+      gap: 8px;
+      align-items: center;
+      margin-top: 12px;
+    }
+    .phone-box input { margin-top: 0; flex: 1; }
+
+    /* ── Delivery boxes ── */
+    .delivery { display: flex; gap: 10px; margin-top: 14px; }
+    .box {
+      flex: 1;
+      padding: 12px 6px;
+      border-radius: 12px;
+      cursor: pointer;
+      text-align: center;
+      border: 2px solid #eee;
+      transition: .25s;
+      background: #fff;
+      font-size: 14px;
+      font-family: inherit;
+    }
+    .box strong { display: block; margin-top: 4px; }
+    .box.active { border-color: #dc6e14; background: #fff5ed; color: #dc6e14; }
+
+    /* ── Order summary ── */
+    #orderSummary {
+      margin-top: 18px;
+      background: #fdfaf7;
+      padding: 14px 16px;
+      border-radius: 12px;
+      border: 1px dashed #dc6e14;
+    }
+    #orderSummary h3 {
+      margin: 0 0 12px;
+      font-size: 17px;
+      color: #333;
+      text-align: center;
+    }
+    .summary-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 14px;
+      color: #555;
+      margin-bottom: 8px;
+    }
+    .summary-row span:last-child { font-weight: 700; color: #222; }
+    .summary-divider { border: none; border-top: 1px solid #eee; margin: 10px 0; }
+    .summary-total {
+      display: flex;
+      justify-content: space-between;
+      font-size: 17px;
+      font-weight: 900;
+    }
+    .summary-total span:last-child { color: #dc6e14; }
+    .delivery-free { color: #27ae60 !important; }
+
+    /* ── Product name textarea ── */
+    .product-name {
+      font-size: 13px;
+      color: #888;
+      margin-bottom: 6px;
+      display: block;
+    }
+    .product-val {
+      font-size: 14px;
+      font-weight: 700;
+      color: #333;
+      margin-bottom: 12px;
+      line-height: 1.5;
+    }
+
+    /* ── Submit button ── */
+    #submitBtn {
+      width: 100%;
+      padding: 15px;
+      margin-top: 18px;
+      background: #dc6e14;
+      color: #fff;
+      border: none;
+      border-radius: 12px;
+      font-size: 17px;
+      font-weight: 700;
+      font-family: inherit;
+      cursor: pointer;
+      transition: opacity .2s, transform .1s;
+      box-shadow: 0 4px 14px rgba(220,110,20,.35);
+    }
+    #submitBtn:active { transform: scale(0.98); }
+    #submitBtn:disabled { opacity: .6; cursor: not-allowed; }
+
+    /* ── Success Modal ── */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.75);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      padding: 16px;
+      z-index: 9999;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity .3s;
+    }
+    .modal-overlay.show {
+      display: flex;
+      opacity: 1;
+      visibility: visible;
+    }
+    .modal-content {
+      background: #fff;
+      padding: 28px 22px;
+      border-radius: 20px;
+      text-align: center;
+      width: 100%;
+      max-width: 340px;
+      box-shadow: 0 10px 30px rgba(0,0,0,.4);
+    }
+    .check-icon    { font-size: 58px; margin-bottom: 12px; }
+    .modal-title   { color: #dc6e14; margin-bottom: 10px; font-size: 20px; }
+    .modal-text    { font-size: 14px; color: #555; margin-bottom: 20px; line-height: 1.7; }
+    .modal-btn {
+      background: #27ae60;
+      color: #fff;
+      border: none;
+      padding: 13px;
+      width: 100%;
+      border-radius: 10px;
+      font-size: 15px;
+      font-weight: 700;
+      font-family: inherit;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+<div id="form">
+  <div class="header">
+    <!-- 🔁 غيّر src بمسار اللوغو تاعك -->
+    <img src="logo.png" alt="BHK Store"
+         onerror="this.src='https://i.ibb.co/Fq37Qhbr/1000023331-removebg-preview.png'">
+    <h2>BHK STORE</h2>
+    <p>الرجاء إدخال معلوماتكم لتأكيد الطلب</p>
+    <p style="color:#27ae60;font-weight:700">✅ التوصيل سريع والدفع عند الاستلام</p>
+  </div>
+
+  <!-- الاسم -->
+  <input type="text" id="cust_name" placeholder="الاسم الكامل">
+
+  <!-- الهاتف -->
+  <div class="phone-box">
+    <input type="tel" id="phoneInput" inputmode="numeric"
+           maxlength="10" placeholder="أدخل رقم الهاتف">
+  </div>
+
+  <!-- الولاية -->
+  <select id="wilayaSelect" onchange="updateCommunes()">
+    <option value="">اختر الولاية</option>
+    <option value="1">01 - أدرار</option>
+    <option value="2">02 - الشلف</option>
+    <option value="3">03 - الأغواط</option>
+    <option value="4">04 - أم البواقي</option>
+    <option value="5">05 - باتنة</option>
+    <option value="6">06 - بجاية</option>
+    <option value="7">07 - بسكرة</option>
+    <option value="8">08 - بشار</option>
+    <option value="9">09 - البليدة</option>
+    <option value="10">10 - البويرة</option>
+    <option value="11">11 - تمنراست</option>
+    <option value="12">12 - تبسة</option>
+    <option value="13">13 - تلمسان</option>
+    <option value="14">14 - تيارت</option>
+    <option value="15">15 - تيزي وزو</option>
+    <option value="16">16 - الجزائر</option>
+    <option value="17">17 - الجلفة</option>
+    <option value="18">18 - جيجل</option>
+    <option value="19">19 - سطيف</option>
+    <option value="20">20 - سعيدة</option>
+    <option value="21">21 - سكيكدة</option>
+    <option value="22">22 - سيدي بلعباس</option>
+    <option value="23">23 - عنابة</option>
+    <option value="24">24 - قالمة</option>
+    <option value="25">25 - قسنطينة</option>
+    <option value="26">26 - المدية</option>
+    <option value="27">27 - مستغانم</option>
+    <option value="28">28 - المسيلة</option>
+    <option value="29">29 - معسكر</option>
+    <option value="30">30 - ورقلة</option>
+    <option value="31">31 - وهران</option>
+    <option value="32">32 - البيض</option>
+    <option value="33">33 - إليزي</option>
+    <option value="34">34 - برج بوعريريج</option>
+    <option value="35">35 - بومرداس</option>
+    <option value="36">36 - الطارف</option>
+    <option value="37">37 - تندوف</option>
+    <option value="38">38 - تيسمسيلت</option>
+    <option value="39">39 - الوادي</option>
+    <option value="40">40 - خنشلة</option>
+    <option value="41">41 - سوق أهراس</option>
+    <option value="42">42 - تيبازة</option>
+    <option value="43">43 - ميلة</option>
+    <option value="44">44 - عين الدفلى</option>
+    <option value="45">45 - النعامة</option>
+    <option value="46">46 - عين تموشنت</option>
+    <option value="47">47 - غرداية</option>
+    <option value="48">48 - غليزان</option>
+    <option value="49">49 - تيميمون</option>
+    <option value="51">51 - أولاد جلال</option>
+    <option value="52">52 - بني عباس</option>
+    <option value="53">53 - عين صالح</option>
+    <option value="55">55 - تقرت</option>
+    <option value="56">56 - جانت</option>
+    <option value="57">57 - المغير</option>
+    <option value="58">58 - المنيعة</option>
+  </select>
+
+  <!-- البلدية -->
+  <select id="communeSelect">
+    <option value="">اختر البلدية</option>
+  </select>
+
+  <!-- نوع التوصيل -->
+  <div class="delivery">
+    <div id="homeBox" class="box active" onclick="selectDelivery('home')">
+      🚚 <strong>للمنزل</strong>
+    </div>
+    <div id="officeBox" class="box" onclick="selectDelivery('office')">
+      📦 <strong>للمكتب</strong>
+    </div>
+  </div>
+
+  <!-- ملخص الطلبية -->
+  <div id="orderSummary">
+    <h3>ملخص الطلبية</h3>
+    <span class="product-name">📦 المنتج:</span>
+    <div class="product-val">جهاز IPL لإزالة الشعر — 1,000,000 ومضة</div>
+    <div class="summary-row">
+      <span>💰 السعر:</span>
+      <span><span id="productPrice">12,000</span> دج</span>
+    </div>
+    <div class="summary-row">
+      <span>🚚 التوصيل:</span>
+      <span class="delivery-free" id="deliveryPrice">مجانا 🎁</span>
+    </div>
+    <hr class="summary-divider">
+    <div class="summary-total">
+      <span>💵 الإجمالي:</span>
+      <span><span id="totalPrice">12,000</span> دج</span>
+    </div>
+  </div>
+
+  <button id="submitBtn" onclick="finalSubmit()">تأكيد الطلب</button>
+</div>
+
+<!-- Modal النجاح -->
+<div id="successModal" class="modal-overlay">
+  <div class="modal-content">
+    <div class="check-icon">✅</div>
+    <h2 class="modal-title">شكراً على ثقتكم! ❤️</h2>
+    <p class="modal-text">
+      تم استلام طلبكم بنجاح.<br>
+      سيتواصل معكم فريق <strong>BHK STORE</strong> قريباً لتأكيد التوصيل.
+    </p>
+    <button onclick="closeSuccessModal()" class="modal-btn">فهمت ✓</button>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
