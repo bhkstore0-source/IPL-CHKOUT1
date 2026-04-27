@@ -4,7 +4,7 @@
 
 const PRODUCT_PRICE      = 12000;
 const PRODUCT_NAME       = 'جهاز IPL لإزالة الشعر — 1,000,000 ومضة';
-const SCRIPT_URL         = 'https://script.google.com/macros/s/AKfycbz3vnUPGd5YxDV1-_Fs5wLjCcHhJ4bAGS7dqlfzOWu8vADXXvzFg5vKOeMFhpLMs-drKA/exec';
+const SCRIPT_URL         = 'https://script.google.com/macros/s/AKfycbwkHLDNCUrDXwj59zAP-DvRD5Iykb9JojgQNEqMCV_YDZyqyEPFpK4PAUcTiHJ92jzCzw/exec';
 const WHATSAPP_NUM       = '213553096569';
 const RESTRICTED_WILAYAS = ['52', '56', '57'];
 
@@ -80,17 +80,18 @@ function finalSubmit() {
   btn.innerText     = '⏳ جاري إرسال الطلب...';
   btn.style.opacity = '0.6';
 
-  const formData = {
+ const formData = {
     product:        PRODUCT_NAME,
-    name,
-    phone,
-    wilaya:         wilayaSel.options[wilayaSel.selectedIndex].text,
-    commune,
+    name:           name,
+    phone:          phone,
+    wilaya_num:     wilayaSel.value, // هنا يبعث رقم الولاية (مثلاً 30)
+    wilaya_name:    wilayaSel.options[wilayaSel.selectedIndex].text, // هنا يبعث اسم الولاية (مثلاً ورقلة)
+    commune:        commune,
     delivery_type:  selectedDelivery === 'home' ? 'توصيل للمنزل' : 'توصيل للمكتب',
-    delivery_price: 'مجانا',
+    delivery_price: 'مجاناً',
     total:          PRODUCT_PRICE.toLocaleString() + ' دج'
-  };
-
+};
+  
   fetch(SCRIPT_URL, {
     method:  'POST',
     mode:    'no-cors',
