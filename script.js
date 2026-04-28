@@ -4,7 +4,7 @@
 
 const PRODUCT_PRICE      = 12000;
 const PRODUCT_NAME       = 'جهاز IPL لإزالة الشعر — 1,000,000 ومضة';
-const SCRIPT_URL         = 'https://script.google.com/macros/s/AKfycbw6GFKN1WjtH7E-W2ONLUgLB7cRduqeQZU39461dkubrZSLnq5sLJo0Qzf9S5ORH2IyXA/exec';
+const SCRIPT_URL         = 'https://script.google.com/macros/s/AKfycbzjCae2QAVIfoNEivck3Y5TydgW9z75Vifk0njcFYWt3onw5Asq4PJbjcjqQyr4RecsDQ/exec';
 const WHATSAPP_NUM       = '213553096569';
 const RESTRICTED_WILAYAS = ['52', '56', '57'];
 
