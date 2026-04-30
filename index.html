@@ -3,319 +3,397 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>BHK STORE — جهاز IPL</title>
+  <title>BHK STORE — جهاز IPL لإزالة الشعر</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
+
     body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: #f0f2f5;
-      padding: 10px;
-      direction: rtl;
+      font-family: 'Cairo', sans-serif;
+      background: #f4f6f9;
+      padding: 16px 12px 40px;
+      min-height: 100vh;
     }
 
     #form {
       background: #fff;
-      padding: 22px;
-      border-radius: 16px;
-      width: 95%;
-      max-width: 500px;
-      margin: 20px auto;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-    }
-
-    /* ── Header ── */
-    .header { text-align: center; margin-bottom: 20px; }
-    .header img { width: 110px; height: auto; margin-bottom: 8px; }
-    .header h2 { color: #dc6e14; margin: 5px 0; font-size: 22px; }
-    .header p  { margin: 4px 0; font-size: 13px; color: #666; }
-
-    /* ── Inputs ── */
-    input, select {
-      width: 100%;
-      padding: 13px 14px;
-      margin-top: 12px;
-      border-radius: 10px;
-      border: 2px solid #eee;
-      font-size: 15px;
-      font-family: inherit;
-      box-sizing: border-box;
-      background: #f9f9f9;
-      transition: border-color .2s;
-    }
-    input:focus, select:focus {
-      border-color: #dc6e14;
-      outline: none;
-      background: #fff;
-    }
-
-    /* ── Phone box ── */
-    .phone-box {
-      display: flex;
-      direction: ltr;
-      gap: 8px;
-      align-items: center;
-      margin-top: 12px;
-    }
-    .phone-box input { margin-top: 0; flex: 1; }
-
-    /* ── Delivery boxes ── */
-    .delivery { display: flex; gap: 10px; margin-top: 14px; }
-    .box {
-      flex: 1;
-      padding: 12px 6px;
-      border-radius: 12px;
-      cursor: pointer;
-      text-align: center;
-      border: 2px solid #eee;
-      transition: .25s;
-      background: #fff;
-      font-size: 14px;
-      font-family: inherit;
-    }
-    .box strong { display: block; margin-top: 4px; }
-    .box.active { border-color: #dc6e14; background: #fff5ed; color: #dc6e14; }
-
-    /* ── Order summary ── */
-    #orderSummary {
-      margin-top: 18px;
-      background: #fdfaf7;
-      padding: 14px 16px;
-      border-radius: 12px;
-      border: 1px dashed #dc6e14;
-    }
-    #orderSummary h3 {
-      margin: 0 0 12px;
-      font-size: 17px;
-      color: #333;
-      text-align: center;
-    }
-    .summary-row {
-      display: flex;
-      justify-content: space-between;
-      font-size: 14px;
-      color: #555;
-      margin-bottom: 8px;
-    }
-    .summary-row span:last-child { font-weight: 700; color: #222; }
-    .summary-divider { border: none; border-top: 1px solid #eee; margin: 10px 0; }
-    .summary-total {
-      display: flex;
-      justify-content: space-between;
-      font-size: 17px;
-      font-weight: 900;
-    }
-    .summary-total span:last-child { color: #dc6e14; }
-    .delivery-free { color: #27ae60 !important; }
-
-    /* ── Product name textarea ── */
-    .product-name {
-      font-size: 13px;
-      color: #888;
-      margin-bottom: 6px;
-      display: block;
-    }
-    .product-val {
-      font-size: 14px;
-      font-weight: 700;
-      color: #333;
-      margin-bottom: 12px;
-      line-height: 1.5;
-    }
-
-    /* ── Submit button ── */
-    #submitBtn {
-      width: 100%;
-      padding: 15px;
-      margin-top: 18px;
-      background: #dc6e14;
-      color: #fff;
-      border: none;
-      border-radius: 12px;
-      font-size: 17px;
-      font-weight: 700;
-      font-family: inherit;
-      cursor: pointer;
-      transition: opacity .2s, transform .1s;
-      box-shadow: 0 4px 14px rgba(220,110,20,.35);
-    }
-    #submitBtn:active { transform: scale(0.98); }
-    #submitBtn:disabled { opacity: .6; cursor: not-allowed; }
-
-    /* ── Success Modal ── */
-    .modal-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,.75);
-      display: none;
-      justify-content: center;
-      align-items: center;
-      padding: 16px;
-      z-index: 9999;
-      opacity: 0;
-      visibility: hidden;
-      transition: opacity .3s;
-    }
-    .modal-overlay.show {
-      display: flex;
-      opacity: 1;
-      visibility: visible;
-    }
-    .modal-content {
-      background: #fff;
-      padding: 28px 22px;
       border-radius: 20px;
+      width: 100%;
+      max-width: 500px;
+      margin: 0 auto;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+      overflow: hidden;
+    }
+
+    /* ─── HEADER ─── */
+    .header {
       text-align: center;
-      width: 100%;
-      max-width: 340px;
-      box-shadow: 0 10px 30px rgba(0,0,0,.4);
+      padding: 28px 24px 20px;
+      border-bottom: 1px solid #f0f0f0;
     }
-    .check-icon    { font-size: 58px; margin-bottom: 12px; }
-    .modal-title   { color: #dc6e14; margin-bottom: 10px; font-size: 20px; }
-    .modal-text    { font-size: 14px; color: #555; margin-bottom: 20px; line-height: 1.7; }
+    .header img {
+      height: 70px; width: auto;
+      margin: 0 auto 14px;
+      object-fit: contain; display: block;
+    }
+    .header h1 { font-size: 22px; font-weight: 900; color: #1a1a1a; margin-bottom: 4px; }
+    .header p  { font-size: 13px; color: #888; }
+
+    /* ─── SECTIONS ─── */
+    .section { padding: 20px 20px 16px; }
+    .section-title {
+      font-size: 16px; font-weight: 800; color: #1a1a1a;
+      margin-bottom: 14px; display: flex; align-items: center; gap: 6px;
+    }
+    .section-subtitle { font-size: 12px; color: #999; font-weight: 400; }
+
+    /* ─── INPUTS ─── */
+    .input-group { position: relative; margin-bottom: 14px; }
+    .input-group label {
+      display: block; font-size: 12px; color: #888;
+      font-weight: 600; margin-bottom: 6px; padding-right: 2px;
+    }
+    .input-group input,
+    .input-group select {
+      width: 100%; padding: 13px 14px;
+      border: 1.5px solid #e8e8e8; border-radius: 12px;
+      font-size: 15px; font-family: 'Cairo', sans-serif;
+      font-weight: 600; color: #1a1a1a; background: #fafafa;
+      transition: border-color 0.2s, background 0.2s;
+      appearance: none; -webkit-appearance: none;
+    }
+    .input-group input:focus,
+    .input-group select:focus {
+      border-color: #2d7d46; background: #fff; outline: none;
+    }
+    .input-group .select-arrow {
+      position: absolute; left: 14px; bottom: 14px;
+      pointer-events: none; color: #aaa; font-size: 12px;
+    }
+    #phoneInput { direction: ltr; text-align: left; }
+
+    /* ─── ADDRESS ROW ─── */
+    .address-row {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 10px; margin-bottom: 4px;
+    }
+    .address-row .input-group { margin-bottom: 0; }
+
+    /* ─── DELIVERY CARDS ─── */
+    .delivery-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 10px; margin-bottom: 4px;
+    }
+    .delivery-card {
+      border: 2px solid #e8e8e8; border-radius: 14px;
+      padding: 16px 12px 14px; cursor: pointer;
+      text-align: center; background: #fafafa;
+      transition: all 0.2s; position: relative;
+      user-select: none; -webkit-user-select: none;
+    }
+    .delivery-card * { pointer-events: none; }
+
+    #homeBox.active   { border-color: #e07b1a; background: #fff7f0; }
+    #homeBox.active .card-check  { opacity: 1; background: #e07b1a; }
+    #homeBox.active .card-title  { color: #e07b1a; }
+
+    #officeBox.active { border-color: #1e3a5f; background: #f0f4f9; }
+    #officeBox.active .card-check { opacity: 1; background: #1e3a5f; }
+    #officeBox.active .card-title { color: #1e3a5f; }
+
+    .card-check {
+      position: absolute; top: 10px; left: 10px;
+      width: 22px; height: 22px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; transition: opacity 0.2s;
+    }
+    .card-check svg {
+      width: 12px; height: 12px; fill: none; stroke: #fff;
+      stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round;
+    }
+    .delivery-card .card-icon  { width: 72px; height: 72px; margin: 0 auto 8px; display: block; }
+    .delivery-card .card-title { font-size: 13px; font-weight: 800; color: #1a1a1a; margin-bottom: 4px; }
+    .delivery-card .card-price { font-size: 13px; font-weight: 800; color: #27ae60; }
+
+    /* ─── SUMMARY ─── */
+    .summary-box {
+      margin: 0 20px 20px;
+      background: #fffbf5; border: 1.5px dashed #e8c88a;
+      border-radius: 14px; padding: 16px;
+    }
+    .summary-box h3 {
+      font-size: 15px; font-weight: 800; color: #1a1a1a;
+      text-align: center; margin-bottom: 12px;
+    }
+    .summary-product-label { font-size: 12px; color: #aaa; margin-bottom: 3px; }
+    .summary-product-name  { font-size: 13px; font-weight: 700; color: #333; margin-bottom: 14px; line-height: 1.6; }
+    .summary-row {
+      display: flex; justify-content: space-between; align-items: center;
+      font-size: 13px; color: #666; margin-bottom: 8px;
+    }
+    .summary-row .val { font-weight: 700; color: #333; }
+    .summary-divider  { border: none; border-top: 1px solid #eee; margin: 10px 0; }
+    .summary-total    { display: flex; justify-content: space-between; align-items: center; font-size: 15px; font-weight: 900; }
+    .summary-total .total-val { color: #c8820a; font-size: 17px; }
+
+    /* ─── SUBMIT ─── */
+    .submit-wrap { padding: 0 20px 24px; }
+    #submitBtn {
+      width: 100%; padding: 17px;
+      background: linear-gradient(135deg, #2d7d46 0%, #1e5c32 100%);
+      color: #fff; border: none; border-radius: 14px;
+      font-size: 17px; font-weight: 800; cursor: pointer;
+      font-family: 'Cairo', sans-serif;
+      box-shadow: 0 6px 20px rgba(45,125,70,0.35);
+      transition: opacity 0.2s, transform 0.1s;
+    }
+    #submitBtn:active   { transform: scale(0.98); }
+    #submitBtn:disabled { opacity: 0.6; }
+
+    .cod-badge {
+      display: flex; align-items: center; justify-content: center; gap: 6px;
+      margin: 0 20px 16px;
+      background: #f0faf4; border: 1px solid #b8e5c8;
+      border-radius: 10px; padding: 10px;
+      font-size: 13px; font-weight: 700; color: #2d7d46;
+    }
+
+    /* ─── MODAL ─── */
+    .modal-overlay {
+      position: fixed; inset: 0; background: rgba(0,0,0,0.7);
+      display: none; justify-content: center; align-items: center;
+      z-index: 9999; padding: 20px;
+    }
+    .modal-overlay.show { display: flex; }
+    .modal-box {
+      background: #fff; border-radius: 20px; padding: 32px 24px;
+      text-align: center; max-width: 340px; width: 100%;
+      border-top: 5px solid #2d7d46;
+    }
+    .modal-icon  { font-size: 56px; margin-bottom: 12px; }
+    .modal-title { color: #2d7d46; font-size: 20px; font-weight: 900; margin-bottom: 8px; }
+    .modal-text  { font-size: 14px; color: #555; margin-bottom: 20px; line-height: 1.8; }
     .modal-btn {
-      background: #27ae60;
-      color: #fff;
-      border: none;
-      padding: 13px;
-      width: 100%;
-      border-radius: 10px;
-      font-size: 15px;
-      font-weight: 700;
-      font-family: inherit;
-      cursor: pointer;
+      background: #2d7d46; color: #fff; border: none;
+      padding: 14px; width: 100%; border-radius: 12px;
+      font-size: 16px; font-weight: 800; cursor: pointer;
+      font-family: 'Cairo', sans-serif;
     }
+
+    .section-divider { height: 1px; background: #f0f0f0; margin: 0 20px; }
   </style>
 </head>
 <body>
 
 <div id="form">
+
+  <!-- HEADER -->
   <div class="header">
-    <!-- 🔁 غيّر src بمسار اللوغو تاعك -->
-    <img src="logo.png" alt="BHK Store"
-         onerror="this.src='https://i.ibb.co/4ZXgyVVD/logo.jpg">
-    <h2>BHK STORE</h2>
-    <p>الرجاء إدخال معلوماتكم لتأكيد الطلب</p>
-    <p style="color:#27ae60;font-weight:700">✅ التوصيل سريع والدفع عند الاستلام</p>
+    <img src="https://i.ibb.co/4ZXgyVVD/logo.jpg" alt="BHK Store">
+    <h1>صفحة تأكيد الطلب</h1>
+    <p>يرجى تعبئة جميع الحقول لتأكيد طلبك</p>
   </div>
 
-  <!-- الاسم -->
-  <input type="text" id="cust_name" placeholder="الاسم الكامل">
-
-  <!-- الهاتف -->
-  <div class="phone-box">
-    <input type="tel" id="phoneInput" inputmode="numeric"
-           maxlength="10" placeholder="أدخل رقم الهاتف">
+  <!-- بيانات الزبون -->
+  <div class="section">
+    <div class="section-title">بيانات الزبون</div>
+    <div class="input-group">
+      <label>الاسم الكامل</label>
+      <input type="text" id="cust_name" autocomplete="name">
+    </div>
+    <div class="input-group">
+      <label>رقم الهاتف</label>
+      <input type="tel" id="phoneInput" inputmode="numeric" maxlength="10" autocomplete="tel">
+    </div>
   </div>
 
-  <!-- الولاية -->
-  <select id="wilayaSelect" onchange="updateCommunes()">
-    <option value="">اختر الولاية</option>
-    <option value="1">01 - أدرار</option>
-    <option value="2">02 - الشلف</option>
-    <option value="3">03 - الأغواط</option>
-    <option value="4">04 - أم البواقي</option>
-    <option value="5">05 - باتنة</option>
-    <option value="6">06 - بجاية</option>
-    <option value="7">07 - بسكرة</option>
-    <option value="8">08 - بشار</option>
-    <option value="9">09 - البليدة</option>
-    <option value="10">10 - البويرة</option>
-    <option value="11">11 - تمنراست</option>
-    <option value="12">12 - تبسة</option>
-    <option value="13">13 - تلمسان</option>
-    <option value="14">14 - تيارت</option>
-    <option value="15">15 - تيزي وزو</option>
-    <option value="16">16 - الجزائر</option>
-    <option value="17">17 - الجلفة</option>
-    <option value="18">18 - جيجل</option>
-    <option value="19">19 - سطيف</option>
-    <option value="20">20 - سعيدة</option>
-    <option value="21">21 - سكيكدة</option>
-    <option value="22">22 - سيدي بلعباس</option>
-    <option value="23">23 - عنابة</option>
-    <option value="24">24 - قالمة</option>
-    <option value="25">25 - قسنطينة</option>
-    <option value="26">26 - المدية</option>
-    <option value="27">27 - مستغانم</option>
-    <option value="28">28 - المسيلة</option>
-    <option value="29">29 - معسكر</option>
-    <option value="30">30 - ورقلة</option>
-    <option value="31">31 - وهران</option>
-    <option value="32">32 - البيض</option>
-    <option value="33">33 - إليزي</option>
-    <option value="34">34 - برج بوعريريج</option>
-    <option value="35">35 - بومرداس</option>
-    <option value="36">36 - الطارف</option>
-    <option value="37">37 - تندوف</option>
-    <option value="38">38 - تيسمسيلت</option>
-    <option value="39">39 - الوادي</option>
-    <option value="40">40 - خنشلة</option>
-    <option value="41">41 - سوق أهراس</option>
-    <option value="42">42 - تيبازة</option>
-    <option value="43">43 - ميلة</option>
-    <option value="44">44 - عين الدفلى</option>
-    <option value="45">45 - النعامة</option>
-    <option value="46">46 - عين تموشنت</option>
-    <option value="47">47 - غرداية</option>
-    <option value="48">48 - غليزان</option>
-    <option value="49">49 - تيميمون</option>
-    <option value="51">51 - أولاد جلال</option>
-    <option value="52">52 - بني عباس</option>
-    <option value="53">53 - عين صالح</option>
-    <option value="55">55 - تقرت</option>
-    <option value="56">56 - جانت</option>
-    <option value="57">57 - المغير</option>
-    <option value="58">58 - المنيعة</option>
-  </select>
-
-  <!-- البلدية -->
-  <select id="communeSelect">
-    <option value="">اختر البلدية</option>
-  </select>
+  <div class="section-divider"></div>
 
   <!-- نوع التوصيل -->
-  <div class="delivery">
-    <div id="homeBox" class="box active" onclick="selectDelivery('home')">
-      🚚 <strong>للمنزل</strong>
+  <div class="section">
+    <div class="section-title">
+      طريقة التوصيل
+      <span class="section-subtitle">(الخطوة الأولى)</span>
     </div>
-    <div id="officeBox" class="box" onclick="selectDelivery('office')">
-      📦 <strong>للمكتب</strong>
+    <div class="delivery-grid">
+
+      <div id="homeBox" class="delivery-card active" onclick="selectDelivery('home')">
+        <div class="card-check">
+          <svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg>
+        </div>
+        <svg class="card-icon" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="100" cy="100" r="96" fill="#fff6ee" stroke="#e07b1a" stroke-width="5"/>
+          <polygon points="100,30 165,85 145,85 145,148 55,148 55,85 35,85" fill="#e07b1a" opacity="0.18"/>
+          <polyline points="35,85 100,30 165,85" fill="none" stroke="#e07b1a" stroke-width="7" stroke-linejoin="round" stroke-linecap="round"/>
+          <rect x="55" y="85" width="90" height="63" rx="3" fill="none" stroke="#e07b1a" stroke-width="5"/>
+          <rect x="84" y="112" width="32" height="36" rx="3" fill="#e07b1a"/>
+          <rect x="62" y="97" width="22" height="18" rx="2" fill="#e07b1a" opacity="0.5"/>
+          <rect x="116" y="97" width="22" height="18" rx="2" fill="#e07b1a" opacity="0.5"/>
+          <ellipse cx="65" cy="170" rx="16" ry="16" fill="none" stroke="#1e3a5f" stroke-width="5"/>
+          <ellipse cx="140" cy="170" rx="16" ry="16" fill="none" stroke="#1e3a5f" stroke-width="5"/>
+          <path d="M81,170 L92,148 L128,148 L140,162" fill="none" stroke="#1e3a5f" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M92,148 L99,132 L118,132" fill="none" stroke="#1e3a5f" stroke-width="4" stroke-linecap="round"/>
+          <rect x="108" y="134" width="24" height="20" rx="3" fill="#e07b1a"/>
+          <line x1="120" y1="134" x2="120" y2="154" stroke="#fff" stroke-width="2"/>
+          <line x1="108" y1="144" x2="132" y2="144" stroke="#fff" stroke-width="2"/>
+        </svg>
+        <div class="card-title">التوصيل للمنزل</div>
+        <div class="card-price">مجانا 🎁</div>
+      </div>
+
+      <div id="officeBox" class="delivery-card" onclick="selectDelivery('office')">
+        <div class="card-check">
+          <svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg>
+        </div>
+        <svg class="card-icon" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="100" cy="100" r="96" fill="#f0f4f9" stroke="#1e3a5f" stroke-width="5"/>
+          <rect x="48" y="38" width="104" height="110" rx="4" fill="#1e3a5f" opacity="0.12"/>
+          <rect x="48" y="38" width="104" height="110" rx="4" fill="none" stroke="#1e3a5f" stroke-width="5"/>
+          <rect x="62" y="52" width="20" height="16" rx="2" fill="#1e3a5f" opacity="0.5"/>
+          <rect x="90" y="52" width="20" height="16" rx="2" fill="#1e3a5f" opacity="0.5"/>
+          <rect x="118" y="52" width="20" height="16" rx="2" fill="#1e3a5f" opacity="0.5"/>
+          <rect x="62" y="76" width="20" height="16" rx="2" fill="#1e3a5f" opacity="0.5"/>
+          <rect x="90" y="76" width="20" height="16" rx="2" fill="#1e3a5f" opacity="0.5"/>
+          <rect x="118" y="76" width="20" height="16" rx="2" fill="#1e3a5f" opacity="0.5"/>
+          <rect x="62" y="100" width="20" height="16" rx="2" fill="#1e3a5f" opacity="0.5"/>
+          <rect x="118" y="100" width="20" height="16" rx="2" fill="#1e3a5f" opacity="0.5"/>
+          <rect x="86" y="112" width="28" height="36" rx="2" fill="#1e3a5f" opacity="0.7"/>
+          <ellipse cx="60" cy="172" rx="15" ry="15" fill="none" stroke="#1e3a5f" stroke-width="5"/>
+          <ellipse cx="138" cy="172" rx="15" ry="15" fill="none" stroke="#1e3a5f" stroke-width="5"/>
+          <path d="M75,172 L86,150 L122,150 L138,164" fill="none" stroke="#1e3a5f" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M86,150 L93,134 L112,134" fill="none" stroke="#1e3a5f" stroke-width="4" stroke-linecap="round"/>
+          <rect x="102" y="136" width="22" height="17" rx="3" fill="#1e3a5f" opacity="0.85"/>
+          <path d="M106,136 L106,130 L120,130 L120,136" fill="none" stroke="#1e3a5f" stroke-width="3" stroke-linecap="round"/>
+        </svg>
+        <div class="card-title">التوصيل للمكتب</div>
+        <div class="card-price">مجانا 🎁</div>
+      </div>
+
     </div>
   </div>
 
-  <!-- ملخص الطلبية -->
-  <div id="orderSummary">
+  <div class="section-divider"></div>
+
+  <!-- العنوان -->
+  <div class="section">
+    <div class="section-title">
+      تفاصيل العنوان
+      <span class="section-subtitle">(الخطوة الثانية)</span>
+    </div>
+    <div class="address-row">
+      <div class="input-group">
+        <label>الولاية</label>
+        <select id="wilayaSelect">
+          <option value="">اختر</option>
+          <option value="1">01 - أدرار</option>
+          <option value="2">02 - الشلف</option>
+          <option value="3">03 - الأغواط</option>
+          <option value="4">04 - أم البواقي</option>
+          <option value="5">05 - باتنة</option>
+          <option value="6">06 - بجاية</option>
+          <option value="7">07 - بسكرة</option>
+          <option value="8">08 - بشار</option>
+          <option value="9">09 - البليدة</option>
+          <option value="10">10 - البويرة</option>
+          <option value="11">11 - تمنراست</option>
+          <option value="12">12 - تبسة</option>
+          <option value="13">13 - تلمسان</option>
+          <option value="14">14 - تيارت</option>
+          <option value="15">15 - تيزي وزو</option>
+          <option value="16">16 - الجزائر</option>
+          <option value="17">17 - الجلفة</option>
+          <option value="18">18 - جيجل</option>
+          <option value="19">19 - سطيف</option>
+          <option value="20">20 - سعيدة</option>
+          <option value="21">21 - سكيكدة</option>
+          <option value="22">22 - سيدي بلعباس</option>
+          <option value="23">23 - عنابة</option>
+          <option value="24">24 - قالمة</option>
+          <option value="25">25 - قسنطينة</option>
+          <option value="26">26 - المدية</option>
+          <option value="27">27 - مستغانم</option>
+          <option value="28">28 - المسيلة</option>
+          <option value="29">29 - معسكر</option>
+          <option value="30">30 - ورقلة</option>
+          <option value="31">31 - وهران</option>
+          <option value="32">32 - البيض</option>
+          <option value="33">33 - إليزي</option>
+          <option value="34">34 - برج بوعريريج</option>
+          <option value="35">35 - بومرداس</option>
+          <option value="36">36 - الطارف</option>
+          <option value="37">37 - تندوف</option>
+          <option value="38">38 - تيسمسيلت</option>
+          <option value="39">39 - الوادي</option>
+          <option value="40">40 - خنشلة</option>
+          <option value="41">41 - سوق أهراس</option>
+          <option value="42">42 - تيبازة</option>
+          <option value="43">43 - ميلة</option>
+          <option value="44">44 - عين الدفلى</option>
+          <option value="45">45 - النعامة</option>
+          <option value="46">46 - عين تموشنت</option>
+          <option value="47">47 - غرداية</option>
+          <option value="48">48 - غليزان</option>
+          <option value="49">49 - تيميمون</option>
+          <option value="51">51 - أولاد جلال</option>
+          <option value="52">52 - بني عباس</option>
+          <option value="53">53 - عين صالح</option>
+          <option value="55">55 - تقرت</option>
+          <option value="56">56 - جانت</option>
+          <option value="57">57 - المغير</option>
+          <option value="58">58 - المنيعة</option>
+        </select>
+        <span class="select-arrow">▾</span>
+      </div>
+      <div class="input-group">
+        <label>البلدية</label>
+        <select id="communeSelect">
+          <option value="">اختر</option>
+        </select>
+        <span class="select-arrow">▾</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- SUMMARY -->
+  <div class="summary-box">
     <h3>ملخص الطلبية</h3>
-    <span class="product-name">📦 المنتج:</span>
-    <div class="product-val">جهاز IPL لإزالة الشعر — 1,000,000 ومضة</div>
+    <div class="summary-product-label">📦 المنتج:</div>
+    <div class="summary-product-name">جهاز IPL لإزالة الشعر — 1,000,000 ومضة</div>
     <div class="summary-row">
       <span>💰 السعر:</span>
-      <span><span id="productPrice">12,000</span> دج</span>
+      <span class="val"><span id="productPrice">12,000</span> دج</span>
     </div>
     <div class="summary-row">
       <span>🚚 التوصيل:</span>
-      <span class="delivery-free" id="deliveryPrice">مجانا 🎁</span>
+      <span id="deliveryPrice" style="color:#27ae60;font-weight:700">مجانا 🎁</span>
     </div>
     <hr class="summary-divider">
     <div class="summary-total">
-      <span>💵 الإجمالي:</span>
-      <span><span id="totalPrice">12,000</span> دج</span>
+      <span>💵 المجموع الكلي:</span>
+      <span class="total-val"><span id="totalPrice">12,000</span> دج</span>
     </div>
   </div>
 
-  <button id="submitBtn" onclick="finalSubmit()">تأكيد الطلب</button>
+  <!-- COD -->
+  <div class="cod-badge">✅ الدفع عند الاستلام — بدون دفع مسبق</div>
+
+  <!-- SUBMIT -->
+  <div class="submit-wrap">
+    <button id="submitBtn" onclick="finalSubmit()">تأكيد الطلب 🛒</button>
+  </div>
+
 </div>
 
-<!-- Modal النجاح -->
+<!-- MODAL -->
 <div id="successModal" class="modal-overlay">
-  <div class="modal-content">
-    <div class="check-icon">✅</div>
+  <div class="modal-box">
+    <div class="modal-icon">✅</div>
     <h2 class="modal-title">شكراً على ثقتكم! ❤️</h2>
     <p class="modal-text">
       تم استلام طلبكم بنجاح.<br>
       سيتواصل معكم فريق <strong>BHK STORE</strong> قريباً لتأكيد التوصيل.
     </p>
-    <button onclick="closeSuccessModal()" class="modal-btn">فهمت ✓</button>
+    <button class="modal-btn" onclick="closeSuccessModal()">فهمت</button>
   </div>
 </div>
 
