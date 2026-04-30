@@ -8,41 +8,64 @@ const SCRIPT_URL         = 'https://script.google.com/macros/s/AKfycby9k67Izvu5m
 const WHATSAPP_NUM       = '213553096569';
 const RESTRICTED_WILAYAS = ['52', '56', '57'];
 
-let selectedDelivery = 'home';
-let communeData      = {};
+let selectedDelivery  = 'home';
+let communeDataHome   = {};
+let communeDataOffice = {};
 
-fetch('communes.json')
-  .then(r => r.json())
-  .then(data => { communeData = data; });
+// ✅ تحميل الملفين عند البداية مرة وحدة
+Promise.all([
+  fetch('communes.json').then(r => r.json()),
+  fetch('communes stopdesk.json').then(r => r.json())
+]).then(([home, office]) => {
+  communeDataHome   = home;
+  communeDataOffice = office;
+});
 
 // ══════════════════════════════════════════
+// ✅ تغيير نوع التوصيل — يعبّي البلديات بدون lag
 function selectDelivery(type) {
   selectedDelivery = type;
   document.getElementById('homeBox').classList.toggle('active',   type === 'home');
   document.getElementById('officeBox').classList.toggle('active', type === 'office');
+
+  // ✅ عبّي البلديات من الملف المناسب إذا الولاية مختارة
+  const w = document.getElementById('wilayaSelect').value;
+  if (w) fillCommunes(w);
+
   updateTotal();
 }
 
 // ══════════════════════════════════════════
+// ✅ تغيير الولاية
 function updateCommunes() {
   const w         = document.getElementById('wilayaSelect').value;
-  const cSelect   = document.getElementById('communeSelect');
   const officeBox = document.getElementById('officeBox');
 
-  cSelect.innerHTML = '<option value="">اختر البلدية</option>';
-  (communeData[w] || []).forEach(name => {
+  if (RESTRICTED_WILAYAS.includes(w)) {
+    officeBox.style.display = 'none';
+    selectedDelivery = 'home';
+    document.getElementById('homeBox').classList.add('active');
+    document.getElementById('officeBox').classList.remove('active');
+  } else {
+    officeBox.style.display = '';
+  }
+
+  fillCommunes(w);
+  updateTotal();
+}
+
+// ══════════════════════════════════════════
+// ✅ عبّي البلديات حسب نوع التوصيل
+function fillCommunes(w) {
+  const cSelect = document.getElementById('communeSelect');
+  const data    = selectedDelivery === 'home' ? communeDataHome : communeDataOffice;
+
+  cSelect.innerHTML = '<option value="">اختر</option>';
+  (data[w] || []).forEach(name => {
     const o = document.createElement('option');
     o.value = name; o.textContent = name;
     cSelect.appendChild(o);
   });
-
-  if (RESTRICTED_WILAYAS.includes(w)) {
-    officeBox.style.display = 'none';
-    selectDelivery('home');
-  } else {
-    officeBox.style.display = '';
-  }
-  updateTotal();
 }
 
 // ══════════════════════════════════════════
@@ -50,12 +73,10 @@ function updateTotal() {
   const pp = document.getElementById('productPrice');
   const dp = document.getElementById('deliveryPrice');
   const tp = document.getElementById('totalPrice');
-  const hint = document.getElementById('deliveryHint');
 
   if (pp) pp.textContent = PRODUCT_PRICE.toLocaleString();
   if (dp) { dp.innerHTML = 'مجانا 🎁'; dp.style.color = '#27ae60'; }
   if (tp) tp.textContent = PRODUCT_PRICE.toLocaleString() + ' دج';
-  if (hint) hint.classList.remove('visible');
 }
 
 // ══════════════════════════════════════════
@@ -81,7 +102,6 @@ function finalSubmit() {
   btn.innerText     = '⏳ جاري إرسال الطلب...';
   btn.style.opacity = '0.6';
 
-  // ✅ التوصيل مجانا — delivery_price = 0
   const payload = JSON.stringify({
     product:        PRODUCT_NAME,
     name:           name,
@@ -109,7 +129,7 @@ function finalSubmit() {
     const modal = document.getElementById('successModal');
     if (modal) { modal.classList.add('show'); modal.style.display = 'flex'; }
     btn.disabled      = false;
-    btn.innerText     = 'تأكيد الطلب';
+    btn.innerText     = 'تأكيد الطلب 🛒';
     btn.style.opacity = '1';
   };
 
